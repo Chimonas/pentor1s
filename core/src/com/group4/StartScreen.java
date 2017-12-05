@@ -32,7 +32,10 @@ public class StartScreen extends InputAdapter implements Screen{
     public StartScreen(TetrisGame game) {
         this.game = game;
     }
-
+    
+    /**
+    * Create the main menu.
+    */
     private void createBasicSkin(){
         //Create a font
         BitmapFont font = new BitmapFont();
@@ -55,7 +58,10 @@ public class StartScreen extends InputAdapter implements Screen{
         skin.add("default", textButtonStyle);
 
     }
-
+    
+    /**
+    * Display the main menu.
+    */
     @Override
     public void show() {
         stage = new Stage();
@@ -94,7 +100,10 @@ public class StartScreen extends InputAdapter implements Screen{
         });
         stage.addActor(QuiteButton);
     }
-
+    
+    /**
+    * Refresh the user interface
+    */
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -104,17 +113,20 @@ public class StartScreen extends InputAdapter implements Screen{
         stage.getBatch().end();
         stage.draw();
     }
-
+    
+   
     @Override
     public void resize(int width, int height) {
 
     }
-
+    
+   
     @Override
     public void pause() {
 
     }
 
+    
     @Override
     public void resume() {
 
