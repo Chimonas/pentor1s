@@ -34,7 +34,11 @@ public class Pentomino extends GameLogic implements InputProcessor {
         this.r=r;
         this.piece=rotations[p][r];
     }
-
+    
+     /**
+     * Puts the next pentomino on the board
+     * @return false when the board is full and you cannot put another pentomino
+     */
     public boolean initPento() {
         row=0;
         col=(int)(Math.random()*COLS);
@@ -71,6 +75,10 @@ public class Pentomino extends GameLogic implements InputProcessor {
         return true;
     }
 
+     /**
+     * Check if the pentomino fits
+     * @return false if the pentomino does not fit
+     */
     public boolean checkOverlap(){
         for (int i = 1; i < 8; i += 2) {
             if (board[row+piece[i]][col+piece[i+1]] > 0)  // checks if one of the squares needed is already occupied
@@ -92,11 +100,17 @@ public class Pentomino extends GameLogic implements InputProcessor {
         else
             return false;
     }
-
+    /**
+    * Returns the current state of the board
+    * @return the board
+    */
     public int[][] getBoard(){
         return board;
     }
 
+    /**
+    * Resets the board.
+    */
     public void resetPento(){
         board=new int[ROWS][COLS];
         maxRow=0;
@@ -111,10 +125,17 @@ public class Pentomino extends GameLogic implements InputProcessor {
         r=0;
     }
 
+    /**
+    * Returns the next pentomino piece
+    * @return the next pentomino piece
+    */
     public int[] getPiece(){
         return piece;
     }
 
+    /**
+    * Draws the next pentomino into the board
+    */
     public void drawPentomino() {
         board[row][col] = piece[0];
         for (int i = 1; i < 8; i += 2){
@@ -122,6 +143,9 @@ public class Pentomino extends GameLogic implements InputProcessor {
         }
     }
 
+    /**
+    * Predicts where the pentomino will fall and shadows the blocks
+    */
     public void drawAim() {
         if(board[minimalDropHeight][col]<=0)
             board[minimalDropHeight][col] = -1;
@@ -130,7 +154,10 @@ public class Pentomino extends GameLogic implements InputProcessor {
                 board[piece[i]+minimalDropHeight][col+piece[i+1]] = -1;
         }
     }
-
+    
+    /**
+    * Removes the shadow from the board.
+    */
     public void removeAim() {
         if(board[minimalDropHeight][col]<=0)
             board[minimalDropHeight][col] = 0;
@@ -141,11 +168,18 @@ public class Pentomino extends GameLogic implements InputProcessor {
         minimalDropHeight=Integer.MAX_VALUE;
     }
 
+    /**
+    * Change the position of the current pentomino.
+    */
     public void removePosition(){
         board[row][col] = 0;
         for (int i = 1; i < 8; i += 2){
             board[row+piece[i]][col+piece[i+1]] = 0;}
     }
+    
+    /**
+    * Rotates the current pentomino.
+    */
     public void rotate(){
         rotatedPiece=rotations[p][(r+1)%rotations[p].length];
         int maxRowR=0;
@@ -211,6 +245,10 @@ public class Pentomino extends GameLogic implements InputProcessor {
         drawPentomino();
     }
 
+    /**
+    * Check if the pentomino is still on the board
+    * @return false when the pentomino is in the board 
+    */
     public  boolean checkOutOfBoard(){
         for (int i = 1; i < 8; i += 2) {
             // i is the row, i+1 is the column
@@ -224,6 +262,10 @@ public class Pentomino extends GameLogic implements InputProcessor {
     }
 
 
+    /**
+    * Tries to move the current piece one space to the left
+    * @return false when it cannot go left.
+    */
     public boolean movePentominoLeft(){
         if (row >= ROWS || //if it is below the board
                 col-1+minCol< 0) //if it is to the left of the board
@@ -238,6 +280,10 @@ public class Pentomino extends GameLogic implements InputProcessor {
         return true;
     }
 
+    /**
+    * Tries to move the current piece one space to the right
+    * @return false when it cannot go right.
+    */
     public boolean movePentominoRight(){
         if (row >= ROWS || //if it is below the board
                 col+1+maxCol >= COLS) //if it is to the right of the board
@@ -252,6 +298,9 @@ public class Pentomino extends GameLogic implements InputProcessor {
         return true;
     }
 
+    /**
+    * Predicts where the current pentomino falls.
+    */
     public void aimDrop(){
         for(int i=minCol+col;i<=maxCol+col;i++){
             for(int j=row+maxRowPerCol[i-(minCol+col)]+1;j<ROWS;j++)
@@ -263,6 +312,9 @@ public class Pentomino extends GameLogic implements InputProcessor {
         }
     }
 
+    /*
+    * Drops the pentomino straight down
+    */
     public void drop(){
         row=minimalDropHeight;
         drawPentomino();
