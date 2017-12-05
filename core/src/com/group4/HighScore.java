@@ -15,9 +15,10 @@ public class HighScore {
     private ArrayList<Integer> points = new ArrayList<Integer>();
     private ArrayList<String> names = new ArrayList<String>();
 
-    //The constructor is initializing 2 arraylists that have all the current
-    //points in the highscore list and one that has all the current names
-    //in the highscore list
+
+    /**
+     * The only constructor that initializes to ArrayLists which are linked to txt files.
+     */
     public HighScore() {
         try {
             BufferedReader a = new BufferedReader(new FileReader("points.txt"));
@@ -34,9 +35,11 @@ public class HighScore {
 
         }catch (IOException e)
         {}
-
     }
 
+    /**
+    * Displays the top 10 highscores during the game.
+    */
     public void gameShow() {
         ArrayList<String> nameList = new ArrayList();
         ArrayList<Integer> pointList = new ArrayList();
@@ -53,27 +56,45 @@ public class HighScore {
 
     }
 
+    /**
+     * Returns the highest score.
+     * @return the highest score
+     */
     public int TopScore(){
-        if(points.size()==0)
-            return 0;
         return points.get(0);
     }
 
+    /**
+     * Returns a String ArrayList of the names in the highscore list.
+     * @return the highscore list of names
+     */
     public ArrayList<String> getNames(){
         return names;
     }
+
+    /**
+     * Returns an Integer ArrayList of the points in the highscore list.
+     * @return the highscore list of points
+     */
     public ArrayList<Integer> getPoints(){
         return points;
     }
 
+    /**
+     * Sends the 2 ArrayLists to be displayed.
+     * @param game
+     */
     public void menuShow(TetrisGame game) {
         new HighscoreScreen(game,names,points);
     }
 
 
-
-    //This method adds the new score along with the new name in the array list
-    //and then it copies it to the local files of names and points.
+    /**
+     * Takes the 2 parametres and adds them on the 2 ArrayLists in the correct order and after that
+     * it adds them on the local text files.
+     * @param newScore the score that the last player that played has made
+     * @param newName   the name of the last player that has played
+     */
     public void add(int newScore,String newName) {
 
         //adding the new score to the list
@@ -111,8 +132,11 @@ public class HighScore {
     }
 
 
-
-    //This method is assisting the constructor on creating the 2 arraylists
+    /**
+     *  Takes a buffered reader and transfers it's contents into an ArrayList<Strings>
+     * @param reader the buffered reader that has readen a file
+     * @return the ArrayList that has the contents of the reader.
+     */
     public ArrayList<String> createArray(BufferedReader reader) {
         ArrayList<String> s = new ArrayList<String>();
         try {
@@ -126,7 +150,10 @@ public class HighScore {
         return s;
     }
 
-    //This method copies the arraylist to the local files
+    /**
+     * Prints the ArrayList into the text file.
+     * @param array an ArrayList of the contents in the highscore.
+     */
     public void addOn(ArrayList array) {
         try {
             PrintWriter writer;
